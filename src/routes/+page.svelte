@@ -23,7 +23,13 @@
         0,
     );
     function addExpense() {
-        expenses = [{ name, cost, category }, ...expenses];
+        if (cost <= 0 || isNaN(cost)) {
+            return;
+        }
+        if (name.length <= 1) {
+            return;
+        }
+        expenses = [{ name, cost: Number(cost), category }, ...expenses];
     }
 </script>
 
@@ -34,6 +40,7 @@
         type="text"
         placeholder="Item name"
         class="input input-bordered input-warning w-1/4 max-w-xs"
+        class:input-error={name.length <= 1}
     />
 
     <input
@@ -41,6 +48,7 @@
         type="text"
         placeholder="Cost"
         class="input input-bordered input-warning w-1/4 max-w-xs"
+        class:input-error={cost <= 0 || isNaN(cost)}
     />
     <select class="select select-warning w-1/4 max-w-xs" bind:value={category}>
         <option>Food</option>
